@@ -30,11 +30,15 @@ function App() {
 
     if (accounts.address === undefined) return;
 
+    setConnector(accounts.connector);
+
     setConectWallet(false);
   }, [accounts.connector]);
 
-  const connectConnector = (connector) => {
-    connect({ connector: connector });
+  const connectConnector = (_connector) => {
+    connect({ connector: _connector });
+    setConnector(_connector);
+
     console.log("ACCOUNTS:,", accounts);
     console.log("CONNECTORS:,", connectors);
   };
@@ -46,8 +50,8 @@ function App() {
   const disconnectWallet = () => {
     if (connector) {
       disconnect();
-      setConectWallet(false);
       setConnector(null);
+      setConectWallet(false);
     }
   };
 
@@ -78,7 +82,7 @@ function App() {
         <div>
           <p>Address: {accounts.address}</p>
           <p>{accounts.isConnected ? "Connected Succesfully" : ""}</p>
-          <p> Chain: {accounts.chain.name}</p>
+          {/* <p> Chain: {accounts.chain.name}</p> */}
           {/* <select
             value={accounts.chain.id}
             onChange={(e) => handleSwitchChain(e.target.value)}
