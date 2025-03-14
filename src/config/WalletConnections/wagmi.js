@@ -12,7 +12,7 @@ import { walletConnect } from "wagmi/connectors";
 const projectId = import.meta.VITE_PROJECTID;
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [mainnet, sepolia, liskSepolia, lisk, polygon, base],
   multiInjectedProviderDiscovery: true,
   transports: {
     [mainnet.id]: http(),

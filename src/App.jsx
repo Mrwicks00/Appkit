@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { initAppkit } from "./config/WalletConnections/appKit";
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import {
   mainnet,
@@ -14,7 +11,7 @@ import {
 } from "wagmi/chains";
 
 function App() {
-  const [connectWallet, setConectWallet] = useState(false);
+  const [connectWallet, setConnectWallet] = useState(false);
   const [connector, setConnector] = useState(null);
   const accounts = useAccount();
   const { connectors, connect } = useConnect();
@@ -24,40 +21,34 @@ function App() {
   const supportedChains = [mainnet, sepolia, lisk, liskSepolia, base, polygon];
 
   useEffect(() => {
-    if (!connector) {
-      return;
+    if (accounts.address) {
+      setConnector(accounts.connector);
+      setConnectWallet(false);
     }
-
-    if (accounts.address === undefined) return;
-
-    setConnector(accounts.connector);
-
-    setConectWallet(false);
-  }, [accounts.connector]);
+  }, [accounts.address, accounts.connector]);
 
   const connectConnector = (_connector) => {
-    connect({ connector: _connector });
-    setConnector(_connector);
-
-    console.log("ACCOUNTS:,", accounts);
-    console.log("CONNECTORS:,", connectors);
+    if (_connector) {
+      connect({ connector: _connector });
+      setConnector(_connector);
+    }
   };
 
   const letConnect = () => {
-    setConectWallet(true);
+    setConnectWallet(true);
   };
 
   const disconnectWallet = () => {
     if (connector) {
       disconnect();
       setConnector(null);
-      setConectWallet(false);
+      setConnectWallet(false);
     }
   };
 
-  // const handleSwitchChain = (id) => {
-  //   switchChain({ chainId: Number(id) });
-  // };
+  const handleSwitchChain = (id) => {
+    if (id) switchChain({ chainId: Number(id) });
+  };
 
   return (
     <>
@@ -65,7 +56,7 @@ function App() {
         <div>
           {!connectWallet ? (
             <button onClick={letConnect}>Connect Wallet</button>
-          ) : (
+          ) : connectors.length > 0 ? (
             <div>
               {connectors.map((connector) => (
                 <button
@@ -75,19 +66,22 @@ function App() {
                   {connector.name}
                 </button>
               ))}
+              <button onClick={() => setConnectWallet(false)}>Cancel</button>
             </div>
+          ) : (
+            <p>No available connectors</p>
           )}
         </div>
       ) : (
         <div>
           <p>Address: {accounts.address}</p>
-          <p>{accounts.isConnected ? "Connected Succesfully" : ""}</p>
-          {/* <p> Chain: {accounts.chain.name}</p> */}
-          {/* <select
-            value={accounts.chain.id}
+          <p>{accounts.isConnected ? "Connected Successfully" : ""}</p>
+          <p>Chain: {accounts.chain?.name}</p>
+          <select
+            value={accounts.chain?.id}
             onChange={(e) => handleSwitchChain(e.target.value)}
           >
-            {supportedChains ? (
+            {supportedChains.length > 0 ? (
               supportedChains.map((chain) => (
                 <option key={chain.id} value={chain.id}>
                   {chain.name}
@@ -96,7 +90,7 @@ function App() {
             ) : (
               <option>No Chains</option>
             )}
-          </select> */}
+          </select>
           <button onClick={disconnectWallet}>Disconnect Wallet</button>
         </div>
       )}
