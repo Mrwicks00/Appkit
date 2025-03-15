@@ -1,0 +1,78 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  /* background: #1a1a1a; */
+}
+
+.logo {
+  color: rgb(224, 58, 175);
+  font-size: 24px;
+  font-weight: bold;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(20px); /* Start position */
+}
+
+.animate-logo {
+  animation: fadeSlide 0.8s ease-out forwards; /* Animation */
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.connect-button-nav,
+.wallet-button {
+  background: #ff00bb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.wallet-button .dropdown-icon {
+  font-size: 14px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  z-index: 1000;
+}
+
+.disconnect-button-nav {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.disconnect-button:hover {
+  background: darkred;
+}

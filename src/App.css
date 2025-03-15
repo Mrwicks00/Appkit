@@ -1,42 +1,484 @@
+/* Root container with updated theme */
+body {
+  margin: 0;
+  padding: 0;
+  background: #030303;
+  color: #f0f4f8;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-title {
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff5e73 0%, #c037d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.app-subtitle {
+  color: #8f9bb3;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Modal Container - improved shadows and dimensions */
+.Modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  max-width: 90%;
+  background: #3a4267;
+  padding: 30px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.6),
+    0px 0px 0px 1px rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  text-align: center;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Modal backdrop with improved blur */
+.Modal::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* Modal header styling */
+.modal-header {
+  margin-bottom: 24px;
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  margin: 0 0 8px 0;
+}
+
+.modal-subheading {
+  font-size: 14px;
+  color: #8f9bb3;
+  margin: 0;
+}
+
+/* Wallet list container */
+.wallet-list {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+/* Modal Buttons with improved styling */
+.Modal-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 10px auto;
+  padding: 18px;
+  border-radius: 14px;
+  background-color: #252d3c;
+  color: #f0f4f8;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.Modal-button:hover {
+  background-color: #2d3648;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.connecting-wallet {
+  border: 1px solid rgba(53, 134, 255, 0.3);
+  background-color: rgba(53, 134, 255, 0.05);
+}
+
+.connecting {
+  animation: pulse 2s infinite;
+  color: #3586ff;
+  font-size: 14px;
+  position: absolute;
+  right: 16px;
+}
+
+/* Wallet Connector Icons */
+.wallet-icon {
+  height: 28px;
+  width: 28px;
+  margin-right: 16px;
+  border-radius: 6px;
+}
+
+.wallet-label {
+  flex: 1;
+  text-align: left;
+}
+
+.wallet-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #252d3c;
+  border-radius: 12px;
+  margin-right: 12px;
+}
+
+/* Cancel button */
+.cancel {
+  background-color: transparent;
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  color: #8f9bb3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.cancel:hover {
+  color: #f0f4f8;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Connect button */
+.connect-button {
+  padding: 16px 24px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #f14ab7 0%, #cb1798 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(53, 134, 255, 0.3);
+  margin-top: 20px;
+}
+
+.connect-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(53, 134, 255, 0.4);
+}
+
+/* Chain Selector */
+select {
+  width: 100%;
+  padding: 16px;
+  margin: 14px auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #252d3c;
+  color: #f0f4f8;
+  font-size: 16px;
+  display: block;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F0F4F8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px top 50%;
+  background-size: 12px auto;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3586ff;
+}
+
+/* Wallet Information */
+.wallet-info {
+  text-align: left;
+  padding: 24px;
+  background: #1a1f2a;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wallet-info p {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #8f9bb3;
+  display: flex;
+  align-items: center;
+}
+
+.wallet-provider {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wallet-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f0f4f8;
+}
+
+/* Connected Wallet Display */
+.connected-wallet {
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  background: #151b26;
+  max-width: 550px;
+  margin: 20px auto;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.connected-wallet h2 {
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+/* Chain Selector Wrapper */
+.chain-selector {
+  margin: 20px 0;
+}
+
+.chain-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #8f9bb3;
+  text-align: left;
+}
+
+/* Disconnect button */
+.disconnect-button {
+  background-color: transparent;
+  color: #ff5475;
+  border: 1px solid rgba(255, 84, 117, 0.3);
+  padding: 16px 24px;
+  width: 100%;
+  border-radius: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.disconnect-button:hover {
+  background-color: rgba(255, 84, 117, 0.1);
+}
+
+/* Lisk branding with updated gradients */
+.lisk {
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #3586ff 0%, #1755cb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.lisk-airdrop {
+  color: #8f9bb3;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Not eligible message */
+.not-eligible {
+  background-color: rgba(255, 84, 117, 0.1);
+  border: 1px solid rgba(255, 84, 117, 0.3);
+  color: #ff5475;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Eligible message */
+.eligible {
+  background-color: rgba(45, 212, 139, 0.1);
+  border: 1px solid rgba(45, 212, 139, 0.3);
+  color: #2dd48b;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Address display with copy button and status indicator */
+.address-display {
+  display: flex;
+  align-items: center;
+  background: #252d3c;
+  padding: 16px;
+  border-radius: 14px;
+  margin: 16px 0;
+  position: relative;
+}
+
+.address-value {
+  flex: 1;
+  font-family: "SF Mono", "Roboto Mono", monospace;
+  color: #f0f4f8;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 12px;
+}
+
+.copy-button {
+  background: rgba(53, 134, 255, 0.1);
+  color: #3586ff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background: rgba(53, 134, 255, 0.2);
+}
+
+/* Status indicator for connection */
+.address-status {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #2dd48b;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+}
+
+.status-indicator::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background-color: rgba(45, 212, 139, 0.3);
+  border-radius: 50%;
+  top: -2px;
+  left: -2px;
+  animation: pulse 2s infinite;
+}
+
+.status-text {
+  font-size: 14px;
+  color: #8f9bb3;
+}
+
+/* Added animation for connecting */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.connecting {
+  animation: pulse 2s infinite;
+  color: #3586ff;
+  font-size: 14px;
+  position: absolute;
+  right: 16px;
+}
+
+/* Add scrollbar styling for wallet list */
+.wallet-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wallet-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.wallet-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.wallet-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 576px) {
+  #root {
+    padding: 1rem;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .connected-wallet {
+    padding: 20px;
+  }
 
-.read-the-docs {
-  color: #888;
+  .wallet-info {
+    padding: 16px;
+  }
+
+  .address-display {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .address-status {
+    margin-bottom: 10px;
+  }
+
+  .address-value {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .copy-button {
+    align-self: flex-end;
+  }
 }

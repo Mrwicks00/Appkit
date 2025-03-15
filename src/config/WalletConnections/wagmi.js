@@ -9,7 +9,7 @@ import {
 } from "wagmi/chains";
 import { walletConnect } from "wagmi/connectors";
 
-const projectId = import.meta.VITE_PROJECTID;
+const projectId = import.meta.env.VITE_PROJECTID;
 
 export const config = createConfig({
   chains: [mainnet, sepolia, liskSepolia, lisk, polygon, base],
